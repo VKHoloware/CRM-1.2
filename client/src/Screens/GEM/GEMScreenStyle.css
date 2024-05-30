@@ -1,0 +1,136 @@
+
+.main_container {
+    display: flex;
+    justify-content: center;
+    max-height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.body_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5% 5% 0 5%; 
+    padding: 20px;
+    text-align: center;
+}
+
+.form_container {
+    display: flex; 
+    width: 30%;
+    flex-direction: column; 
+    align-items: center; 
+    align-content: center;
+    justify-content: center;
+    width: 400px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.preview_container {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+    margin-left: 20px;
+    background-color: #fff;
+
+    text-align: center;
+    align-items: center;
+}
+
+.sheet {
+    border-radius: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    page-break-after: always;
+    position: relative;
+}
+
+.preview {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin-left: 20px;
+    background-color: #fff;
+    width: 210mm;
+    height: 297mm;
+    page-break-after: auto;
+    
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+@media print {
+    .preview {
+        page-break-after: always;
+    }
+}
+.p-left{
+    text-align: left;
+    padding-right: 40px;
+}
+
+
+.p-right{
+    text-align: right;
+    padding-right: 40px;
+}
+
+.p-desciption{
+    text-align: center;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.header{
+    display: block;
+    padding-top: 40px;
+
+}
+.content{
+    text-align: left;
+    padding-top:0px;
+    padding-left: 40px;
+    padding-bottom: 10px;
+    padding-right: 40px;
+}
+.foter-text{
+    text-align: center;
+    padding-bottom: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+}
+
+.button {
+    font-size: 16px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 18px;
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    margin: 15px;
+    transition: background-color 0.3s; 
+    text-decoration: none;
+}
+.footer{
+    display: block;
+}
+.button:hover {
+    background-color: #333; 
+}
+.css-18hu16z{
+    text-align: -webkit-center !important;
+}
+
+.left{
+    text-align: left;
+}
