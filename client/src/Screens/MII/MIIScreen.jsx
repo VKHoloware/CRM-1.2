@@ -2,7 +2,6 @@ import React, { useState , useEffect, useRef } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
-import { Link, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -14,10 +13,13 @@ import './MIIScreenStyle.css';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import archanasign from'./imgs/Archana-sign.png';
-import { Checkbox } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Link, useNavigate } from 'react-router-dom';
 
 
-function MIIScreen({userData}) { 
+function MIIScreen({userData}) {
   const [data, setData] = useState({ companyname: '', 
                                         sno: '', date: '', 
                                         model: '', chassis: '', 
@@ -26,11 +28,47 @@ function MIIScreen({userData}) {
                                         , screw: '', rivit: ''
                                         , bush: '', pcbboard: ''
                                         , pcbwiring: '', motherboard: ''
+                                        , processor: '', processorfan: ''
+                                        , ram: '', ssd: ''
+                                        , smps: ''
+                                        , procname: '', rammodel: ''
+                                        , smpsmodel: '', storage1:''
+                                        , chassismod: '', keyboard: ''
+                                        , mouse: '', bordmodel: ''
+                                        
+                                        
                                         });
   const [datas, setDatas] = useState(null);
+//----------------------------------drop down
+
+    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedValue, setSelectedValue] = useState('');
+    const [selectedImage, setSelectedImage] = useState('');
+  
+    const handleChange = (event) => {
+      const value = event.target.value;
+      setSelectedOption(value);
+      setSelectedValue(optionValues[value] || '');
+      setSelectedImage(optionImages[value] || '');
+    };
+
+    const optionValues = {
+        Udaya: 'Team Lead',
+        Archana: 'Associate Executive',
+        Kalpana: 'Associate',
+        Atchaya: 'Associate',
+      };
+    
+      const optionImages = {
+        Udaya: archanasign,
+        Archana: 'path_to_archana_image.jpg',
+        Kalpana: 'path_to_kalpana_image.jpg',
+        Atchaya: 'path_to_atchaya_image.jpg',
+      };
+
 //-----------------------------current date
   var [date,setDate] = useState(new Date());
-  const navigate = useNavigate();
+    
   useEffect(() => {
       var timer = setInterval(()=>setDate(new Date()), 1000 )
       return function cleanup() {
@@ -40,11 +78,6 @@ function MIIScreen({userData}) {
   });
 //--------------------------------------------
 
-useEffect(() => {
-    if (!userData) {
-      navigate('/');
-    }
-  }, [userData, navigate]);
 
 
   const handlechange = (event) => {
@@ -144,13 +177,13 @@ const downloadPDF = () => {
 
 
     return (
-        <div>
         <div className='main_container'>
-        <div className='nav_container'>
+            <div className='nav_container'>
                 <h3>Welcome {userData.userName}</h3>
             </div>
             <div className='body_container'>
                 <div className='form_container'>
+                    
                     <Box
                         component='form'
                         sx={{
@@ -160,7 +193,33 @@ const downloadPDF = () => {
                         noValidate
                         autoComplete='off'
                     >
+                        
+                        <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'></FormControl>{' '}
+                        <br /> <br />
+
                         <h3> MII Certificate </h3><br/>
+
+                        <InputLabel id="dropdown-label">Your Name</InputLabel>
+                <Select
+                    labelId="dropdown-label"
+                    id="options"
+                    value={selectedOption}
+                    onChange={handleChange}
+                 //   label="Your Name"
+                >
+                    <MenuItem value="">
+                        <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="Udaya">Udaya</MenuItem>
+                    <MenuItem value="Archana">Archana</MenuItem>
+                    <MenuItem value="Kalpana">Kalpana</MenuItem>
+                    <MenuItem value="Atchaya">Atchaya</MenuItem>
+                </Select>
+
+
+
+
+
                         <TextField
                             id='companyname'
                             label='Company Name'
@@ -169,8 +228,8 @@ const downloadPDF = () => {
                             value={data.companyname}
                             onChange={handlechange}
                         />
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'></FormControl>{' '}
-                        <br /> <br />
+
+
                         <TextField
                             label='Serial Number'
                             id='sno'
@@ -334,8 +393,173 @@ const downloadPDF = () => {
                             InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
                         />{' '}
                         <br />
+
+                        <h5>Foreign content Percentage</h5>
+                        <TextField
+                            id='processor'
+                            label='Processor'
+                            variant='outlined'
+                            type='number'
+                            name='processor'
+                            value={data.processor}
+                            onChange={handlechange}
+                            InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
+                        />{' '}
+
+                        <TextField
+                            id='processorfan'
+                            label='Processor Fan'
+                            variant='outlined'
+                            type='number'
+                            name='processorfan'
+                            value={data.processorfan}
+                            onChange={handlechange}
+                            InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
+                        />{' '}
+                        <br />
+
+                        
+                        <TextField
+                            id='ram'
+                            label='RAM'
+                            variant='outlined'
+                            type='number'
+                            name='ram'
+                            value={data.ram}
+                            onChange={handlechange}
+                            InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
+                        />{' '}
+                        <br />
+                        
+                        <TextField
+                            id='ssd'
+                            label='SSD'
+                            variant='outlined'
+                            type='number'
+                            name='ssd'
+                            value={data.ssd}
+                            onChange={handlechange}
+                            InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
+                        />{' '}
+                        <br />
+                        <TextField
+                            id='smps'
+                            label='SMPS (Power Supply)'
+                            variant='outlined'
+                            type='number'
+                            name='smps'
+                            value={data.smps}
+                            onChange={handlechange}
+                            InputProps={{ endAdornment: <InputAdornment position='end'>%</InputAdornment> }}
+                        />{' '}
+                        <br />  
+
+                        <h5>Product details</h5>
+                        <TextField
+                            id='procname'
+                            label='Processor Name'
+                            variant='outlined'
+                            name='procname'
+                            value={data.procname}
+                            onChange={handlechange}
+                        />
+
+                        <TextField
+                            id='rammodel'
+                            label='RAM Model'
+                            variant='outlined'
+                            name='rammodel'
+                            value={data.rammodel}
+                            onChange={handlechange}
+                        />
+
+                        
+                        <TextField
+                            id='storage1'
+                            label='Storage Model'
+                            variant='outlined'
+                            name='storage1'
+                            value={data.storage1}
+                            onChange={handlechange}
+                        />
+
+                        <TextField
+                            id='bordmodel'
+                            label='Motherboard Model'
+                            variant='outlined'
+                            name='bordmodel'
+                            value={data.bordmodel}
+                            onChange={handlechange}
+                        />
+                        <TextField
+                            id='smpsmodel'
+                            label='Power Model'
+                            variant='outlined'
+                            name='smpsmodel'
+                            value={data.smpsmodel}
+                            onChange={handlechange}
+                        />
+
+                        <InputLabel id="dropdown-label">Chassis Model</InputLabel>
+                        <Select
+                            labelId="dropdown-label"
+                            id="chassismod"
+                            value={data.chassismod}
+                            name='chassismod'
+                            onChange={handlechange}
+                            label="Chassis Model"
+                        >
+                            <MenuItem value="">
+                            <em>None</em>
+                            </MenuItem>
+                            <MenuItem value="India">India</MenuItem>
+                            <MenuItem value="China">China</MenuItem>
+                            <MenuItem value="Taiwan">Taiwan</MenuItem>
+                        
+                    </Select>
+
+                        <InputLabel id="dropdown-label">Keyboard Model</InputLabel>
+                        <Select
+                            labelId="dropdown-label"
+                            id="keyboard"
+                            value={data.keyboard}
+                            name='keyboard'
+                            onChange={handlechange}
+                            label="Keyboard Model"
+                        >
+                            <MenuItem value="">
+                            <em>None</em>
+                            </MenuItem>
+                            <MenuItem value="India">India</MenuItem>
+                            <MenuItem value="China">China</MenuItem>
+                            <MenuItem value="Taiwan">Taiwan</MenuItem>
+                        
+                    </Select>
+                        
+                        <InputLabel id="dropdown-label">Mouse Model</InputLabel>
+                        <Select
+                        labelId="dropdown-label"
+                        id="mouse"
+                        value={data.mouse}
+                        name='mouse'
+                        onChange={handlechange}
+                        label="Mouse Model"
+                >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="India">India</MenuItem>
+                        <MenuItem value="China">China</MenuItem>
+                        <MenuItem value="Taiwan">Taiwan</MenuItem>
+                        
+                    </Select>
+
+
+
                         <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'></FormControl> <br />
                     </Box>
+
+                    
 
                     <div className='button_container'>
                     <button className='button' onClick={() => setIsVisible(!isVisible)}>
@@ -362,7 +586,7 @@ const downloadPDF = () => {
                             <div className="p-right">
                             <p>Date:{datas.date}</p></div>
                             <div className="p-desciption">
-                            <p>In line with Government Public Procurement Order No. P-45021/2/2017-PP (BE-II) dated 04.06.2020 issued by Ministry of Commerce and Industry and subsequent amendment of the order dt. 16th September 2020, we hereby certify that we, Jaikrishna Technology Pvt Ltd are local supplier meeting the requirement of minimum local content (*) (i.e. amount of value addition) 51% as deﬁned in above orders for the item/s against Enquiry/Tender Ref.No. GEM/{datas.sno}</p>
+                            <p>In line with Government Public Procurement Order No. P-45021/2/2017-PP (BE-II) dated 04.06.2020 issued by Ministry of Commerce and Industry and subsequent amendment of the order dt. 16th September 2020, we hereby certify that we, Jaikrishna Technology Pvt Ltd are local supplier meeting the requirement of minimum local content (*) (i.e. amount of value addition) 51% as deﬁned in above orders for the item/s against Enquiry/Tender Ref.No. {datas.sno}</p>
                             </div>
                             <div className="content">
 
@@ -502,7 +726,7 @@ const downloadPDF = () => {
                         {datas.rivit}%
                     </p>
                 </td>
-            </tr>
+            </tr><br/><br/><br/>
             <tr>
                 <td>
                     <p dir="ltr">
@@ -572,23 +796,296 @@ const downloadPDF = () => {
                 </td>
             </tr>
       </tbody>
+      </table><br/><br/>
+
+{/*----------------------------------------------------------------------------------- */}
+
+{/*-------------------------------------table 2---------------------------------------------- */}
+
+<table className='center' border="1" cellPadding="10" cellSpacing="0">
+        <colgroup>
+            <col width="60"/>
+            <col width="277"/>
+            <col width="230"/>
+        </colgroup>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Description</th>
+          <th>Foreign content Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        1
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    Processor
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.processor}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    Processor fan
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.processorfan}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        RAM
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.ram}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        SSD
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.ssd}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        SMPS (power Supply)
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.smps}%
+                    </p>
+                </td>
+            </tr>
+      </tbody>
+      </table><br/><br/>
+
+{/*----------------------------------------------------------------------------------- */}
+
+{/*-------------------------------------table 3---------------------------------------------- */}
+
+<table className='center' border="1" cellPadding="10" cellSpacing="0">
+        <colgroup>
+            <col width="60"/>
+            <col width="277"/>
+            <col width="230"/>
+        </colgroup>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Product details</th>
+          <th>Name of Place</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        1
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    Processor
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.processor}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        2
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    RAM
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.processorfan}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        3
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Storage
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.ram}%
+                    </p>
+                </td>
+            </tr><br/><br/>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        4
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                       Motherboard
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.ssd}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        5
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Power Supply
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        {datas.smps}%
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        6
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Chassis
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    {datas.chassismod}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        7
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Keyboard
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    {datas.keyboard}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p dir="ltr">
+                        8
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                        Mouse
+                    </p>
+                </td>
+                <td>
+                    <p dir="ltr">
+                    {datas.mouse}
+                    </p>
+                </td>
+            </tr>
+      </tbody>
       </table>
 
 {/*----------------------------------------------------------------------------------- */}
-                                <br/><br/><br/><br/><br/>
+<br/>
+<p>
+We also understand, false declarations will be in breach of the code of integrity under rule 175(1)(i)(h) of the General Financial Rules for which a bidder or its successors can be debarred for up to two years as per Rule 151(iii) of the General Financial Rules along with such other actions as may be permissible under law.
+</p>
+<p>
+I/ We certify that Transportation, Insurance, Installation, Commissioning, Training & other after Sales Service Support like AMC/CMC, etc., not claimed as a Local Value Addition. Signature of the vendor with stamp
+
+</p>
+
+
+                                <br/><br/>
                                  <div className="footer" >Yours Sincerely,<br/>
                                     For Holoware (A Unit of Jaikrishna Technology Private Limited),<br/><br/>
                                     
-                                    {isVisible && (
+                                    <img src={selectedImage} style={{ width: '200px', height: '100px' }} /><br/>
+                                    Name: {selectedOption} <br/>
+                                    Designation: {selectedValue}<br/>
+                                    Date:{datas.date}<br/><br/>
+                                    {/*isVisible && (
                                     <div>
                                         <img src={archanasign} />
                                     </div>
-                                    )}
-                                    Name: Archana A<br/>
-                                    Designation: Business Development Executive<br/>
-                                    Full Address: No 2,Moondram Kattalai, Kundrathur Main Road,Chennai-600128 <br/>
-                                    Tel: 1800-572-5882<br/>
-                                    Date : {date.toLocaleDateString()}
+                                    )*/}
+                    
                                     
                                  </div><br/><br/>
                                  
@@ -630,16 +1127,15 @@ const downloadPDF = () => {
                 </div>
                 
             </div>
-        </div>
-
-           {/* .......................back button */}
+                     {/* .......................back button */}
       <div style={{ textAlign: "center" }}>
         <Link to="/holoware_pricing">
           <button className="button">
-            Go to back
+            Back
           </button>
         </Link>
       </div>
+
         </div>
     );
 }
