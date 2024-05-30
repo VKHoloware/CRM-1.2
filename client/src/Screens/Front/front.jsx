@@ -19,7 +19,7 @@ function front() {
           <button id="button">MII Certificate</button>
         </Link>
         <Link to="/MAF_Certificate">
-          <button id="button">MAF Certificate</button>
+          <button id="button">Make In India Certificate</button>
         </Link>
         <Link to="/Warranty_Certificate">
           <button id="button">Warranty Certificate</button>
